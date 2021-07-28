@@ -1,0 +1,13 @@
+{
+    "name": "AutoTrader",
+    "alias": "autotrader",
+    "description": "",
+    "keywords": [],
+    "priority": 0,
+    "providers": [
+        "Modules\\AutoTrader\\Providers\\AutoTraderServiceProvider"
+    ],
+    "aliases": {},
+    "files": [],
+    "requires": []
+}

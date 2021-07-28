@@ -1,0 +1,13 @@
+{
+    "name": "QuickTrader",
+    "alias": "quicktrader",
+    "description": "",
+    "keywords": [],
+    "priority": 0,
+    "providers": [
+        "Modules\\QuickTrader\\Providers\\QuickTraderServiceProvider"
+    ],
+    "aliases": {},
+    "files": [],
+    "requires": []
+}
