@@ -2,5 +2,6 @@
     "AutoTrader": true,
     "QuickTrader": true,
     "Portfolio": true,
-    "Customer": true
+    "Customer": true,
+    "Blog": true
 }
