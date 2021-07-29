@@ -5,75 +5,88 @@ namespace Modules\Portfolio\Http\Controllers;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
+use Illuminate\Support\Facades\Http;
 
 class PortfolioController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     * @return Renderable
-     */
-    public function index()
+    public function getAccountInfo()
     {
-        return view('portfolio::index');
+        $rs = Http::withHeaders(["authorization" => "BasicAuthentication 00860901-46a8-468f-ac2e-65288990d52e"])
+            ->get("https://api2.mofidonline.com/web/v1/Accounting/Remain");
+        return $rs;
     }
 
-    /**
-     * Show the form for creating a new resource.
-     * @return Renderable
-     */
-    public function create()
+    public function getPortfolio()
     {
-        return view('portfolio::create');
+        $rs = Http::withHeaders(["authorization" => "BasicAuthentication 00860901-46a8-468f-ac2e-65288990d52e"])
+            ->get("https://api2.mofidonline.com/web/v1/DailyPortfolio/LightDailyPortfolioMobile");
+        return $rs;
     }
 
-    /**
-     * Store a newly created resource in storage.
-     * @param Request $request
-     * @return Renderable
-     */
-    public function store(Request $request)
+    public function SearchSymbol(Request $request)
     {
-        //
+        $rs = Http::get("https://api2.mofidonline.com/web/v1/Symbol/GetSymbol?term=" . $request->term);
+        return $rs;
     }
 
-    /**
-     * Show the specified resource.
-     * @param int $id
-     * @return Renderable
-     */
-    public function show($id)
+    public function SymbolInfo(Request $request)
     {
-        return view('portfolio::show');
+        $rs = Http::get("https://core.tadbirrlc.com//StockFilteredResult?Type=getLightSymbolInfoAndQueue&nscCode=" . $request->code);
+        return $rs;
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     * @param int $id
-     * @return Renderable
-     */
-    public function edit($id)
+    public function getOrderHistory()
     {
-        return view('portfolio::edit');
+        $body = [
+            "NSCCode" => null,
+            "OrderFrom" => null,
+            "AccountingType" => null,
+            "OrderSide" => null,
+            "OrderState" => null,
+            "FromDate" => "2021-05-30T06:48:52.309Z",
+            "ToDate" => null,
+            "PageIndex" => 0,
+            "PageSize" => 20,
+        ];
+        $rs = Http::withHeaders(["authorization" => "BasicAuthentication 00860901-46a8-468f-ac2e-65288990d52e"])
+            ->post("https://api2.mofidonline.com/web/v1/Order/GetOrderList/Customer/GetOrderList", $body);
+        return $rs;
     }
 
-    /**
-     * Update the specified resource in storage.
-     * @param Request $request
-     * @param int $id
-     * @return Renderable
-     */
-    public function update(Request $request, $id)
+    public function buyOrder(Request $request)
     {
-        //
+        $body = [
+            "FinancialProviderId" => 1,
+            "isin" => $request->symbol,
+            "maxShow" => 0,
+            "orderCount" => intval($request->count),
+            "orderId" => 0,
+            "orderPrice" => intval($request->price),
+            "orderSide" => 65,
+            "orderValidity" => 74,
+            "orderValiditydate" => "",
+        ];
+        $rs = Http::withHeaders(["authorization" => "BasicAuthentication 00860901-46a8-468f-ac2e-65288990d52e"])
+            ->post("https://api2.mofidonline.com/web/v1/Order/Post", $body);
+        return $rs;
     }
 
-    /**
-     * Remove the specified resource from storage.
-     * @param int $id
-     * @return Renderable
-     */
-    public function destroy($id)
+    public function sellOrder(Request $request)
     {
-        //
+        $body = [
+            "orderCount" => intval($request->count),
+            "orderPrice" => intval($request->price),
+            "FinancialProviderId" => 1,
+            "isin" => $request->symbol,
+            "orderSide" => 86,
+            "orderValidity" => 74,
+            "orderValiditydate" => "",
+            "maxShow" => 0,
+            "orderId" => 0,
+
+        ];
+        $rs = Http::withHeaders(["authorization" => "BasicAuthentication 00860901-46a8-468f-ac2e-65288990d52e"])
+            ->post("https://api2.mofidonline.com/web/v1/Order/Post", $body);
+        return $rs;
     }
 }

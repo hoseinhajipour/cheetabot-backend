@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Http\Request;
+use Modules\Portfolio\Http\Controllers\PortfolioController;
 
 /*
 |--------------------------------------------------------------------------
@@ -12,7 +13,17 @@ use Illuminate\Http\Request;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
+Route::get('/v1/portfolio', [PortfolioController::class, 'getPortfolio']);
+Route::get('/v1/userInfo', [PortfolioController::class, 'getAccountInfo']);
+Route::get('/v1/symbol/search', [PortfolioController::class, 'SearchSymbol']);
+Route::get('/v1/symbol/info', [PortfolioController::class, 'SymbolInfo']);
+Route::get('/v1/portfolio/order/history', [PortfolioController::class, 'getOrderHistory']);
 
-Route::middleware('auth:api')->get('/portfolio', function (Request $request) {
-    return $request->user();
+Route::get('/v1/order/buy', [PortfolioController::class, 'buyOrder']);
+Route::get('/v1/order/sell', [PortfolioController::class, 'sellOrder']);
+/*
+Route::middleware('/v1/portfolio')->group(function () {
+    Route::get('/userInfo', [PortfolioController::class, 'getAccountInfo']);
+
 });
+*/
