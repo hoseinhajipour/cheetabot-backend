@@ -16,7 +16,7 @@ use Modules\Portfolio\Http\Controllers\PortfolioController;
 Route::get('/v1/portfolio', [PortfolioController::class, 'getPortfolio']);
 Route::get('/v1/userInfo', [PortfolioController::class, 'getAccountInfo']);
 Route::get('/v1/symbol/search', [PortfolioController::class, 'SearchSymbol']);
-Route::get('/v1/symbol/info', [PortfolioController::class, 'SymbolInfo']);
+Route::get('/v1/symbol/info/{code}', [PortfolioController::class, 'SymbolInfo']);
 Route::get('/v1/portfolio/order/history', [PortfolioController::class, 'getOrderHistory']);
 
 Route::get('/v1/order/buy', [PortfolioController::class, 'buyOrder']);

@@ -10,14 +10,14 @@ class PortfolioController extends Controller
 {
     public function getAccountInfo()
     {
-        $rs = Http::withHeaders(["authorization" => "BasicAuthentication 00860901-46a8-468f-ac2e-65288990d52e"])
+        $rs = Http::withHeaders(["authorization" => "BasicAuthentication 7c4e947b-0b98-428b-817f-fe026279ca32"])
             ->get("https://api2.mofidonline.com/web/v1/Accounting/Remain");
         return $rs;
     }
 
     public function getPortfolio()
     {
-        $rs = Http::withHeaders(["authorization" => "BasicAuthentication 00860901-46a8-468f-ac2e-65288990d52e"])
+        $rs = Http::withHeaders(["authorization" => "BasicAuthentication 7c4e947b-0b98-428b-817f-fe026279ca32"])
             ->get("https://api2.mofidonline.com/web/v1/DailyPortfolio/LightDailyPortfolioMobile");
         return $rs;
     }
@@ -28,9 +28,9 @@ class PortfolioController extends Controller
         return $rs;
     }
 
-    public function SymbolInfo(Request $request)
+    public function SymbolInfo(Request $request,$code)
     {
-        $rs = Http::get("https://core.tadbirrlc.com//StockFilteredResult?Type=getLightSymbolInfoAndQueue&nscCode=" . $request->code);
+        $rs = Http::get("https://core.tadbirrlc.com//StockFilteredResult?Type=getLightSymbolInfoAndQueue&nscCode=" .$code);
         return $rs;
     }
 
@@ -47,7 +47,7 @@ class PortfolioController extends Controller
             "PageIndex" => 0,
             "PageSize" => 20,
         ];
-        $rs = Http::withHeaders(["authorization" => "BasicAuthentication 00860901-46a8-468f-ac2e-65288990d52e"])
+        $rs = Http::withHeaders(["authorization" => "BasicAuthentication 7c4e947b-0b98-428b-817f-fe026279ca32"])
             ->post("https://api2.mofidonline.com/web/v1/Order/GetOrderList/Customer/GetOrderList", $body);
         return $rs;
     }
@@ -65,7 +65,7 @@ class PortfolioController extends Controller
             "orderValidity" => 74,
             "orderValiditydate" => "",
         ];
-        $rs = Http::withHeaders(["authorization" => "BasicAuthentication 00860901-46a8-468f-ac2e-65288990d52e"])
+        $rs = Http::withHeaders(["authorization" => "BasicAuthentication 7c4e947b-0b98-428b-817f-fe026279ca32"])
             ->post("https://api2.mofidonline.com/web/v1/Order/Post", $body);
         return $rs;
     }
@@ -84,7 +84,7 @@ class PortfolioController extends Controller
             "orderId" => 0,
 
         ];
-        $rs = Http::withHeaders(["authorization" => "BasicAuthentication 00860901-46a8-468f-ac2e-65288990d52e"])
+        $rs = Http::withHeaders(["authorization" => "BasicAuthentication 7c4e947b-0b98-428b-817f-fe026279ca32"])
             ->post("https://api2.mofidonline.com/web/v1/Order/Post", $body);
         return $rs;
     }
